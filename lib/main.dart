@@ -54,7 +54,7 @@ class MyWidget extends StatelessWidget {
               color: Colors.blue,
               tag: 'BLUE',
               child: Descendant(
-                color: Colors.yellow,
+                color: color,
                 tag: 'INNER',
               ),
             ),
