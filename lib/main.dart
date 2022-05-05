@@ -70,7 +70,7 @@ class Descendant extends StatelessWidget {
   final Color color;
   final Widget? child;
 
-  Descendant({
+  const Descendant({
     required this.tag,
     required this.color,
     this.child,
@@ -98,15 +98,4 @@ class Descendant extends StatelessWidget {
       ),
     );
   }
-
-  @override
-  bool operator ==(Object other) {
-    return other is Descendant &&
-        tag == other.tag &&
-        color == other.color &&
-        child == other.child;
-  }
-
-  @override
-  int get hashCode => 17;
 }
