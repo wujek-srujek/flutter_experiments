@@ -37,11 +37,11 @@ class MyPage extends StatelessWidget {
       body: const MyWidget(),
       floatingActionButton: InkWell(
         onLongPress: () {
-          InheritedCount.operations(context).set(5);
+          InheritedCount.of(context, depend: false).value = 5;
         },
         child: FloatingActionButton(
           onPressed: () {
-            InheritedCount.operations(context).increment();
+            InheritedCount.of(context, depend: false).value++;
           },
           child: const Icon(Icons.add),
         ),
@@ -56,7 +56,7 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log('Building MyWidget');
-    final count = InheritedCount.of(context);
+    final count = InheritedCount.of(context).value;
 
     return Center(
       child: Text(

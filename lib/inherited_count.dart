@@ -1,78 +1,27 @@
 import 'package:flutter/material.dart';
 
-class InheritedCount extends StatefulWidget {
-  final int count;
-  final Widget child;
-
-  const InheritedCount({
-    required this.count,
-    required this.child,
-  });
-
-  static int of(BuildContext context) {
-    final inheritedWidget =
-        context.dependOnInheritedWidgetOfExactType<_InheritedCount>()!;
-
-    return inheritedWidget.count;
-  }
-
-  static CountOperations operations(BuildContext context) {
-    return context.findAncestorStateOfType<_InheritedCountState>()!;
-  }
-
-  @override
-  State<InheritedCount> createState() => _InheritedCountState();
-}
-
-abstract class CountOperations {
-  void increment();
-  void set(int count);
-}
-
-class _InheritedCountState extends State<InheritedCount>
-    implements CountOperations {
-  late int _count;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _count = widget.count;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _InheritedCount(
-      count: _count,
-      child: widget.child,
-    );
-  }
-
-  @override
-  void increment() {
-    setState(() {
-      ++_count;
-    });
-  }
-
-  @override
-  void set(int count) {
-    setState(() {
-      _count = count;
-    });
-  }
-}
-
-class _InheritedCount extends InheritedWidget {
-  final int count;
-
-  const _InheritedCount({
-    required this.count,
+class InheritedCount extends InheritedNotifier<ValueNotifier<int>> {
+  InheritedCount({
+    required int count,
     required super.child,
-  });
+  }) : super(
+          // We should dispose of it later but let's ignore
+          // it for this presentation for simplicity.
+          notifier: ValueNotifier(count),
+        );
 
-  @override
-  bool updateShouldNotify(covariant _InheritedCount oldWidget) {
-    return count != oldWidget.count && count.isEven;
+  static ValueNotifier<int> of(BuildContext context, {bool depend = true}) {
+    final ValueNotifier<int> notifier;
+    if (depend) {
+      notifier = context
+          .dependOnInheritedWidgetOfExactType<InheritedCount>()!
+          .notifier!;
+    } else {
+      final element =
+          context.getElementForInheritedWidgetOfExactType<InheritedCount>()!;
+      notifier = (element.widget as InheritedCount).notifier!;
+    }
+
+    return notifier;
   }
 }
