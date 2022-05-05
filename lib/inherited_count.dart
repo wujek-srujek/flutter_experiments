@@ -73,6 +73,6 @@ class _InheritedCount extends InheritedWidget {
 
   @override
   bool updateShouldNotify(covariant _InheritedCount oldWidget) {
-    return count != oldWidget.count;
+    return count != oldWidget.count && count.isEven;
   }
 }
