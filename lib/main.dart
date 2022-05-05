@@ -33,8 +33,14 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: MyWidget(),
+    return Scaffold(
+      body: const MyWidget(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          InheritedCount.increment(context);
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
