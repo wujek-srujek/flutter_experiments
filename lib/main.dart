@@ -25,7 +25,14 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: MyWidget(),
+        child: PageView(
+          children: [
+            Container(
+              color: Colors.yellow,
+            ),
+            MyWidget(),
+          ],
+        ),
       ),
     );
   }
