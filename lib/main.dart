@@ -39,28 +39,32 @@ class MyPage extends StatelessWidget {
 
 class MyWidget extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contextRed) {
     return Descendant(
       color: Colors.red,
       tag: 'RED',
-      child: Descendant(
-        color: Colors.green,
-        tag: 'GREEN',
-        child: Descendant(
-          color: Colors.blue,
-          tag: 'BLUE',
-          child: Builder(
-            builder: (contextInner) {
-              final color = context.watch<ColorNotifier>().value;
+      child: Builder(builder: (contextGreen) {
+        return Descendant(
+          color: Colors.green,
+          tag: 'GREEN',
+          child: Builder(builder: (contextBlue) {
+            return Descendant(
+              color: Colors.blue,
+              tag: 'BLUE',
+              child: Builder(
+                builder: (contextInner) {
+                  final color = contextBlue.watch<ColorNotifier>().value;
 
-              return Descendant(
-                color: color,
-                tag: 'INNER',
-              );
-            },
-          ),
-        ),
-      ),
+                  return Descendant(
+                    color: color,
+                    tag: 'INNER',
+                  );
+                },
+              ),
+            );
+          }),
+        );
+      }),
     );
   }
 }
