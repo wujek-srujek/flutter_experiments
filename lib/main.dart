@@ -1,14 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-
-import 'provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   final count = _getDataFromSomewhereEgStorage();
   runApp(
-    Provider(
-      data: count,
+    ChangeNotifierProvider(
+      create: (context) => ValueNotifier(count),
       child: const MyApp(),
     ),
   );
@@ -37,11 +36,11 @@ class MyPage extends StatelessWidget {
       body: const MyWidget(),
       floatingActionButton: InkWell(
         onLongPress: () {
-          context.read<int>().value = 5;
+          context.read<ValueNotifier<int>>().value = 5;
         },
         child: FloatingActionButton(
           onPressed: () {
-            context.read<int>().value++;
+            context.read<ValueNotifier<int>>().value++;
           },
           child: const Icon(Icons.add),
         ),
@@ -56,7 +55,7 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log('Building MyWidget');
-    final count = context.watch<int>().value;
+    final count = context.watch<ValueNotifier<int>>().value;
 
     return Center(
       child: Text(
