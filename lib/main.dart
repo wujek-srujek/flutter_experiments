@@ -82,8 +82,6 @@ class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
 class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<ProductsCubit>().initialize();
-
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         final Color color;
