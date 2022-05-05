@@ -43,11 +43,14 @@ class MyWidget extends StatelessWidget {
     return BlocBuilder<ColorCubit, Color>(
       builder: (context, color) {
         log('BlocBuilder.builder');
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          log('==================================================');
+        });
 
         return Descendant(
           color: color,
           tag: 'OUTER',
-          child: Descendant(
+          child: const Descendant(
             color: Colors.green,
             tag: 'GREEN',
             child: Descendant(
@@ -79,12 +82,6 @@ class Descendant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log('Building $tag');
-
-    if (child == null) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        log('==================================================');
-      });
-    }
 
     return Container(
       color: color,
