@@ -10,11 +10,8 @@ class InheritedCount extends StatefulWidget {
   });
 
   static int of(BuildContext context) {
-    final inheritedElement =
-        context.getElementForInheritedWidgetOfExactType<_InheritedCount>()!;
-    final inheritedWidget = inheritedElement.widget as _InheritedCount;
-
-    context.dependOnInheritedElement(inheritedElement);
+    final inheritedWidget =
+        context.dependOnInheritedWidgetOfExactType<_InheritedCount>()!;
 
     return inheritedWidget.count;
   }
