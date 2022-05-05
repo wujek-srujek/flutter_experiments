@@ -81,7 +81,7 @@ class Descendant extends StatelessWidget {
     log('Building $tag');
 
     if (child == null) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         log('==================================================');
       });
     }
@@ -98,4 +98,15 @@ class Descendant extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Descendant &&
+        tag == other.tag &&
+        color == other.color &&
+        child == other.child;
+  }
+
+  @override
+  int get hashCode => 17;
 }
