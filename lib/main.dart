@@ -35,11 +35,16 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: const MyWidget(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          InheritedCount.increment(context);
+      floatingActionButton: InkWell(
+        onLongPress: () {
+          InheritedCount.set(context, 5);
         },
-        child: const Icon(Icons.add),
+        child: FloatingActionButton(
+          onPressed: () {
+            InheritedCount.increment(context);
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
