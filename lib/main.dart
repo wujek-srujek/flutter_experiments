@@ -78,25 +78,26 @@ class _MyWidgetState extends State<MyWidget> with TickerProviderStateMixin {
             scale: value < 0.5 ? 1 - value : value,
             child: Transform.rotate(
               angle: value * 2 * math.pi,
-              child: const Descendant(
-                color: Colors.red,
-                tag: 'RED',
-                child: Descendant(
-                  color: Colors.green,
-                  tag: 'GREEN',
-                  child: Descendant(
-                    color: Colors.blue,
-                    tag: 'BLUE',
-                    child: Descendant(
-                      color: Colors.yellow,
-                      tag: 'YELLOW',
-                    ),
-                  ),
-                ),
-              ),
+              child: child,
             ),
           );
         },
+        child: Descendant(
+          color: Colors.red,
+          tag: 'RED',
+          child: Descendant(
+            color: Colors.green,
+            tag: 'GREEN',
+            child: Descendant(
+              color: Colors.blue,
+              tag: 'BLUE',
+              child: Descendant(
+                color: Colors.yellow,
+                tag: 'YELLOW',
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -107,7 +108,7 @@ class Descendant extends StatelessWidget {
   final Color color;
   final Widget? child;
 
-  const Descendant({
+  Descendant({
     required this.tag,
     required this.color,
     this.child,
