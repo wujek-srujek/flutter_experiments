@@ -16,9 +16,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   var _count = 0;
 
-  ProductsCubit() : super(ProductsInitial()) {
-    initialize();
-  }
+  ProductsCubit() : super(ProductsInitial());
 
   Future<void> initialize() {
     final count = ++_count;

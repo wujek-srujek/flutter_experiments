@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsCubit(),
+      create: (context) => ProductsCubit()..initialize(),
       child: MaterialApp(
         title: 'Flutter Experiments',
         home: MyPage(),
