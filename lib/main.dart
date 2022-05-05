@@ -40,8 +40,6 @@ class MyPage extends StatelessWidget {
 class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final color = context.watch<ColorNotifier>().value;
-
     return Descendant(
       color: Colors.red,
       tag: 'RED',
@@ -51,9 +49,15 @@ class MyWidget extends StatelessWidget {
         child: Descendant(
           color: Colors.blue,
           tag: 'BLUE',
-          child: Descendant(
-            color: color,
-            tag: 'INNER',
+          child: Builder(
+            builder: (context) {
+              final color = context.watch<ColorNotifier>().value;
+
+              return Descendant(
+                color: color,
+                tag: 'INNER',
+              );
+            },
           ),
         ),
       ),
