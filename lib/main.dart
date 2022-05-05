@@ -20,19 +20,60 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
+  @override
+  State<MyPage> createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
+  late final AnimationController _controller;
+  var _isBig = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final min = 0.5;
+    final max = 1.0;
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 400),
+      lowerBound: min,
+      upperBound: max,
+      value: _isBig ? max : min,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: PageView(
-          children: [
-            Container(
-              color: Colors.yellow,
-            ),
-            MyWidget(),
-          ],
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _controller.value,
+              child: MyWidget(),
+            );
+          },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await (_isBig ? _controller.reverse() : _controller.forward());
+
+          setState(() {
+            _isBig = !_isBig;
+          });
+        },
+        child: Icon(_isBig ? Icons.zoom_in_map : Icons.zoom_out_map),
       ),
     );
   }
