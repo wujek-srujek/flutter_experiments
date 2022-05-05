@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import 'inherited_count.dart';
+import 'provider.dart';
 
 void main() {
   final count = _getDataFromSomewhereEgStorage();
   runApp(
-    InheritedCount(
-      count: count,
+    Provider(
+      data: count,
       child: const MyApp(),
     ),
   );
@@ -37,11 +37,11 @@ class MyPage extends StatelessWidget {
       body: const MyWidget(),
       floatingActionButton: InkWell(
         onLongPress: () {
-          InheritedCount.of(context, depend: false).value = 5;
+          context.read<int>().value = 5;
         },
         child: FloatingActionButton(
           onPressed: () {
-            InheritedCount.of(context, depend: false).value++;
+            context.read<int>().value++;
           },
           child: const Icon(Icons.add),
         ),
@@ -56,7 +56,7 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log('Building MyWidget');
-    final count = InheritedCount.of(context).value;
+    final count = context.watch<int>().value;
 
     return Center(
       child: Text(
