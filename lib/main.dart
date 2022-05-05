@@ -31,7 +31,7 @@ class MyPage extends StatelessWidget {
         onPressed: () {
           context.read<ColorCubit>().refreshColor();
         },
-        child: Icon(Icons.refresh),
+        child: const Icon(Icons.refresh),
       ),
     );
   }
@@ -44,7 +44,7 @@ class MyWidget extends StatelessWidget {
       builder: (context, color) {
         log('BlocBuilder.builder');
 
-        return Descendant(
+        return const Descendant(
           color: Colors.red,
           tag: 'RED',
           child: Descendant(
@@ -88,9 +88,9 @@ class Descendant extends StatelessWidget {
 
     return Container(
       color: color,
-      constraints: BoxConstraints.expand(),
+      constraints: const BoxConstraints.expand(),
       child: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 48,
           vertical: 96,
         ),
