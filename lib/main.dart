@@ -40,29 +40,27 @@ class MyPage extends StatelessWidget {
 class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Descendant(
-      color: Colors.red,
-      tag: 'RED',
-      child: Descendant(
-        color: Colors.green,
-        tag: 'GREEN',
-        child: Descendant(
-          color: Colors.blue,
-          tag: 'BLUE',
-          child: BlocBuilder<ColorCubit, Color>(
-            builder: _buildWithColor,
+    return BlocBuilder<ColorCubit, Color>(
+      builder: (context, color) {
+        log('BlocBuilder.builder');
+
+        return Descendant(
+          color: color,
+          tag: 'OUTER',
+          child: Descendant(
+            color: Colors.green,
+            tag: 'GREEN',
+            child: Descendant(
+              color: Colors.blue,
+              tag: 'BLUE',
+              child: Descendant(
+                color: Colors.yellow,
+                tag: 'YELLOW',
+              ),
+            ),
           ),
-        ),
-      ),
-    );
-  }
-
-  static Widget _buildWithColor(BuildContext context, Color color) {
-    log('BlocBuilder.builder');
-
-    return Descendant(
-      color: color,
-      tag: 'INNER',
+        );
+      },
     );
   }
 }
