@@ -16,19 +16,21 @@ class InheritedCount extends StatefulWidget {
     return inheritedWidget.count;
   }
 
-  static void increment(BuildContext context) {
-    context.findAncestorStateOfType<_InheritedCountState>()!._increment();
-  }
-
-  static void set(BuildContext context, int count) {
-    context.findAncestorStateOfType<_InheritedCountState>()!._set(count);
+  static CountOperations operations(BuildContext context) {
+    return context.findAncestorStateOfType<_InheritedCountState>()!;
   }
 
   @override
   State<InheritedCount> createState() => _InheritedCountState();
 }
 
-class _InheritedCountState extends State<InheritedCount> {
+abstract class CountOperations {
+  void increment();
+  void set(int count);
+}
+
+class _InheritedCountState extends State<InheritedCount>
+    implements CountOperations {
   late int _count;
 
   @override
@@ -46,13 +48,15 @@ class _InheritedCountState extends State<InheritedCount> {
     );
   }
 
-  void _increment() {
+  @override
+  void increment() {
     setState(() {
       ++_count;
     });
   }
 
-  void _set(int count) {
+  @override
+  void set(int count) {
     setState(() {
       _count = count;
     });

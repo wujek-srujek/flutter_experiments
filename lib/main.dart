@@ -37,11 +37,11 @@ class MyPage extends StatelessWidget {
       body: const MyWidget(),
       floatingActionButton: InkWell(
         onLongPress: () {
-          InheritedCount.set(context, 5);
+          InheritedCount.operations(context).set(5);
         },
         child: FloatingActionButton(
           onPressed: () {
-            InheritedCount.increment(context);
+            InheritedCount.operations(context).increment();
           },
           child: const Icon(Icons.add),
         ),
