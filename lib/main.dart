@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsCubit()..initialize(),
+      create: (context) => ProductsCubit(),
       child: MaterialApp(
         title: 'Flutter Experiments',
         home: MyPage(),
@@ -79,7 +79,19 @@ class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
   }
 }
 
-class MyWidget extends StatelessWidget {
+class MyWidget extends StatefulWidget {
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<ProductsCubit>().initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsCubit, ProductsState>(
