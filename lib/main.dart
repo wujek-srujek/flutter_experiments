@@ -2,11 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
+import 'inherited_count.dart';
+
 void main() {
   final count = _getDataFromSomewhereEgStorage();
   runApp(
-    MyApp(
+    InheritedCount(
       count: count,
+      child: const MyApp(),
     ),
   );
 }
@@ -14,44 +17,35 @@ void main() {
 int _getDataFromSomewhereEgStorage() => 0;
 
 class MyApp extends StatelessWidget {
-  final int count;
-
-  const MyApp({required this.count});
+  const MyApp();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Experiments',
-      home: MyPage(
-        count: count,
-      ),
+      home: MyPage(),
     );
   }
 }
 
 class MyPage extends StatelessWidget {
-  final int count;
-
-  const MyPage({required this.count});
+  const MyPage();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MyWidget(
-        count: count,
-      ),
+    return const Scaffold(
+      body: MyWidget(),
     );
   }
 }
 
 class MyWidget extends StatelessWidget {
-  final int count;
-
-  const MyWidget({required this.count});
+  const MyWidget();
 
   @override
   Widget build(BuildContext context) {
     log('Building MyWidget');
+    final count = InheritedCount.of(context);
 
     return Center(
       child: Text(
