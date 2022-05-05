@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'products_cubit.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,9 +10,12 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Experiments',
-      home: MyPage(),
+    return BlocProvider(
+      create: (context) => ProductsCubit(),
+      child: MaterialApp(
+        title: 'Flutter Experiments',
+        home: MyPage(),
+      ),
     );
   }
 }
@@ -19,8 +25,19 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('master'),
+        child: MyWidget(),
       ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    context.read<ProductsCubit>().initialize();
+
+    return Container(
+      color: Colors.red,
     );
   }
 }
