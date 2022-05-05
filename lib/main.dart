@@ -51,12 +51,10 @@ class MyWidget extends StatelessWidget {
             return Descendant(
               color: Colors.blue,
               tag: 'BLUE',
-              child: Builder(
-                builder: (contextInner) {
-                  final color = contextBlue.watch<ColorNotifier>().value;
-
+              child: Consumer<ColorNotifier>(
+                builder: (contextInner, colorNotifier, child) {
                   return Descendant(
-                    color: color,
+                    color: colorNotifier.value,
                     tag: 'INNER',
                   );
                 },
