@@ -84,8 +84,21 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ProductsCubit>().initialize();
 
-    return Container(
-      color: Colors.red,
+    return BlocBuilder<ProductsCubit, ProductsState>(
+      builder: (context, state) {
+        final Color color;
+        if (state is ProductsInitial) {
+          color = Colors.white;
+        } else if (state is ProductsLoading) {
+          color = Colors.yellow;
+        } else {
+          color = Colors.red;
+        }
+
+        return Container(
+          color: color,
+        );
+      },
     );
   }
 }
