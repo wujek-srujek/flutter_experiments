@@ -26,49 +26,20 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
-  late final AnimationController _controller;
   var _isBig = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    final min = 0.5;
-    final max = 1.0;
-    _controller = AnimationController(
-      duration: Duration(milliseconds: 400),
-      lowerBound: min,
-      upperBound: max,
-      value: _isBig ? max : min,
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    _controller.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: _controller.value,
-              child: MyWidget(),
-            );
-          },
+        child: AnimatedScale(
+          duration: Duration(milliseconds: 400),
+          scale: _isBig ? 1 : 0.5,
+          child: MyWidget(),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await (_isBig ? _controller.reverse() : _controller.forward());
-
+        onPressed: () {
           setState(() {
             _isBig = !_isBig;
           });
