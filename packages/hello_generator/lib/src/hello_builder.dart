@@ -7,10 +7,19 @@ class HelloBuilder implements Builder {
   };
 
   @override
-  Future<void> build(BuildStep buildStep) async {
-    log.info('>>> Hello, builder!');
+  Future<void> build(BuildStep buildStep) {
+    final inputId = buildStep.inputId;
+    final helloOutputId = inputId.changeExtension(_helloExtension);
+    final inputName = inputId.changeExtension('').pathSegments.last;
+
+    return buildStep.writeAsString(
+      helloOutputId,
+      _generate(inputName),
+    );
   }
 }
+
+String _generate(String name) => 'Hello, $name!\n';
 
 const _dartExtension = '.dart';
 const _helloExtension = '.hello';
