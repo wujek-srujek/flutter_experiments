@@ -10,5 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+dev_dependencies:
+  hello_generator:
+    path: packages/hello_generator
+
 flutter:
   uses-material-design: true
