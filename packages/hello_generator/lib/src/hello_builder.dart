@@ -10,7 +10,12 @@ class HelloBuilder implements Builder {
   Future<void> build(BuildStep buildStep) {
     final inputId = buildStep.inputId;
     final helloOutputId = inputId.changeExtension(_helloExtension);
-    final inputName = inputId.changeExtension('').pathSegments.last;
+    final inputName = inputId
+        .changeExtension('')
+        .pathSegments
+        // Drop the leading /lib.
+        .sublist(1)
+        .join('/');
 
     return buildStep.writeAsString(
       helloOutputId,
