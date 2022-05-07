@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      hello_generator:hello:
+        generate_for:
+          include:
+            - '**/*.dart'
+        options:
+          greeting: Servus
