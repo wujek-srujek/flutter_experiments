@@ -42,3 +42,6 @@ app.*.map.json
 
 # Do not store pubspec.lock for subpackages
 /packages/**/pubspec.lock
+
+# Do not store generated files
+/lib/**/*.hello
