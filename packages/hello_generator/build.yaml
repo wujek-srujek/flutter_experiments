@@ -21,3 +21,12 @@ builders:
     build_to: source
     required_inputs:
       - .hello.part
+    applies_builders:
+      - hello_generator:_part_cleanup
+
+post_process_builders:
+  _part_cleanup:
+    import: package:hello_generator/src/builder.dart
+    builder_factory: partCleanup
+    input_extensions:
+      - .hello.part
