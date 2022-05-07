@@ -7,7 +7,7 @@ builders:
       .dart:
         - .hello
     auto_apply: dependents
-    build_to: source
+    build_to: cache
     defaults:
       generate_for:
         exclude:
