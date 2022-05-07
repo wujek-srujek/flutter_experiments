@@ -1,1 +1,0 @@
-const helloMain = 'Hello, main!';

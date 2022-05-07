@@ -1,29 +1,27 @@
 import 'package:build/build.dart';
+import 'package:glob/glob.dart';
 import 'package:recase/recase.dart';
 
 import 'common_extensions.dart';
 
-class HelloDartBuilder implements Builder {
+class HelloPartCollectorBuilder implements Builder {
   @override
   final buildExtensions = const {
-    helloPartExtension: [_helloDartExtension],
+    _packageSyntheticInput: [_helloGenDartOutput],
   };
 
   @override
   Future<void> build(BuildStep buildStep) async {
-    final inputId = buildStep.inputId;
+    final code = await buildStep.findAssets(_helloPartGlob).asyncMap(
+      (assetId) async {
+        final fieldName = _fieldNameFromAssetId(assetId);
+        final fieldValue = (await buildStep.readAsString(assetId)).trim();
 
-    final fieldName = _fieldNameFromAssetId(inputId);
-    final fieldValue = (await buildStep.readAsString(inputId)).trim();
+        return _generate(fieldName, fieldValue);
+      },
+    ).join('\n');
 
-    // Change <file name>.hello.part to <file name>.hello.dart,
-    // the '.hello' part stays unchanged.
-    final outputId = inputId.changeExtension(dartExtension);
-
-    return buildStep.writeAsString(
-      outputId,
-      _generate(fieldName, fieldValue),
-    );
+    return buildStep.writeAsString(buildStep.allowedOutputs.single, '$code\n');
   }
 }
 
@@ -48,6 +46,8 @@ String _fieldNameFromAssetId(AssetId assetId) {
   return filePathSegments.join('_').camelCase;
 }
 
-String _generate(String name, String value) => "const $name = '$value';\n";
+String _generate(String name, String value) => "const $name = '$value';";
 
-const _helloDartExtension = '.hello.dart';
+const _packageSyntheticInput = r'$package$';
+const _helloGenDartOutput = 'lib/hello.gen.dart';
+final _helloPartGlob = Glob('**/*$helloPartExtension');

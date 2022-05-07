@@ -1,7 +1,7 @@
 import 'package:build/build.dart';
 
-import 'hello_dart_builder.dart';
+import 'hello_part_collector_builder.dart';
 
-Builder helloDartBuilder(BuilderOptions options) {
-  return HelloDartBuilder();
+Builder helloCollectorBuilder(BuilderOptions options) {
+  return HelloPartCollectorBuilder();
 }

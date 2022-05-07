@@ -9,11 +9,11 @@ class HelloPartBuilder implements Builder {
 
   @override
   final buildExtensions = const {
-    dartExtension: [helloPartExtension],
+    _dartExtension: [helloPartExtension],
   };
 
   @override
-  Future<void> build(BuildStep buildStep) {
+  Future<void> build(BuildStep buildStep) async {
     final inputId = buildStep.inputId;
     final helloOutputId = inputId.changeExtension(helloPartExtension);
     final inputName = inputId
@@ -23,7 +23,7 @@ class HelloPartBuilder implements Builder {
         .sublist(1)
         .join('/');
 
-    return buildStep.writeAsString(
+    await buildStep.writeAsString(
       helloOutputId,
       _generate(_greeting, inputName),
     );
@@ -31,3 +31,5 @@ class HelloPartBuilder implements Builder {
 }
 
 String _generate(String greeting, String name) => '$greeting, $name!\n';
+
+const _dartExtension = '.dart';

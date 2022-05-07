@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'main.hello.dart';
+import 'hello.gen.dart';
 
 void main() {
   runApp(const MyApp());

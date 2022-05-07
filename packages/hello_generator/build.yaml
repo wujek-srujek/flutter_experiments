@@ -9,15 +9,15 @@ builders:
     auto_apply: dependents
     build_to: cache
     applies_builders:
-      - hello_generator:_hallo_dart
+      - hello_generator:_hello_collector
 
-  _hallo_dart:
+  _hello_collector:
     import: package:hello_generator/src/builder.dart
     builder_factories:
-      - helloDartBuilder
+      - helloCollectorBuilder
     build_extensions:
-      .hello.part:
-        - .hello.dart
+      $package$:
+        - lib/hello.gen.dart
     build_to: source
     required_inputs:
       - .hello.part
