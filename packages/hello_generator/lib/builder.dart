@@ -1,7 +1,7 @@
 import 'package:build/build.dart';
 
-import 'src/hello_builder.dart';
+import 'src/hello_part_builder.dart';
 
 Builder helloBuilder(BuilderOptions options) {
-  return HelloBuilder((options.config['greeting'] as String?) ?? 'Hello');
+  return HelloPartBuilder((options.config['greeting'] as String?) ?? 'Hello');
 }

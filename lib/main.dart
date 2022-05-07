@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'main.hello.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -23,7 +25,7 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('master'),
+        child: Text(helloMain),
       ),
     );
   }

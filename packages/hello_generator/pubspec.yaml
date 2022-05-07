@@ -7,3 +7,5 @@ environment:
 dependencies:
   build: ^2.0.0
   build_config: ^1.0.0
+  glob: ^2.0.0
+  recase: ^4.0.0

@@ -1,19 +1,21 @@
 import 'package:build/build.dart';
 
-class HelloBuilder implements Builder {
+import 'common_extensions.dart';
+
+class HelloPartBuilder implements Builder {
   final String _greeting;
 
-  HelloBuilder(this._greeting);
+  HelloPartBuilder(this._greeting);
 
   @override
   final buildExtensions = const {
-    _dartExtension: [_helloExtension],
+    dartExtension: [helloPartExtension],
   };
 
   @override
   Future<void> build(BuildStep buildStep) {
     final inputId = buildStep.inputId;
-    final helloOutputId = inputId.changeExtension(_helloExtension);
+    final helloOutputId = inputId.changeExtension(helloPartExtension);
     final inputName = inputId
         .changeExtension('')
         .pathSegments
@@ -29,6 +31,3 @@ class HelloBuilder implements Builder {
 }
 
 String _generate(String greeting, String name) => '$greeting, $name!\n';
-
-const _dartExtension = '.dart';
-const _helloExtension = '.hello';

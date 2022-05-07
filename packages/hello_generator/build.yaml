@@ -5,12 +5,19 @@ builders:
       - helloBuilder
     build_extensions:
       .dart:
-        - .hello
+        - .hello.part
     auto_apply: dependents
     build_to: cache
-    defaults:
-      generate_for:
-        exclude:
-          - '**/*_*.dart'
-      options:
-        greeting: Hola
+    applies_builders:
+      - hello_generator:_hallo_dart
+
+  _hallo_dart:
+    import: package:hello_generator/src/builder.dart
+    builder_factories:
+      - helloDartBuilder
+    build_extensions:
+      .hello.part:
+        - .hello.dart
+    build_to: source
+    required_inputs:
+      - .hello.part

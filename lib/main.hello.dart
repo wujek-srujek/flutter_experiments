@@ -1,0 +1,1 @@
+const helloMain = 'Hello, main!';
