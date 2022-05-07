@@ -1,6 +1,10 @@
 import 'package:build/build.dart';
 
 class HelloBuilder implements Builder {
+  final String _greeting;
+
+  HelloBuilder(this._greeting);
+
   @override
   final buildExtensions = const {
     _dartExtension: [_helloExtension],
@@ -19,12 +23,12 @@ class HelloBuilder implements Builder {
 
     return buildStep.writeAsString(
       helloOutputId,
-      _generate(inputName),
+      _generate(_greeting, inputName),
     );
   }
 }
 
-String _generate(String name) => 'Hello, $name!\n';
+String _generate(String greeting, String name) => '$greeting, $name!\n';
 
 const _dartExtension = '.dart';
 const _helloExtension = '.hello';

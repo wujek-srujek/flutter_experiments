@@ -8,3 +8,9 @@ builders:
         - .hello
     auto_apply: dependents
     build_to: source
+    defaults:
+      generate_for:
+        exclude:
+          - '**/*_*.dart'
+      options:
+        greeting: Hola
