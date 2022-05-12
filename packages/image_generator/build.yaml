@@ -1,0 +1,10 @@
+builders:
+  image_generator:images:
+    import: package:image_generator/builder.dart
+    builder_factories:
+      - imagesBuilder
+    build_extensions:
+      .b64:
+        - .png
+    auto_apply: dependents
+    build_to: source
