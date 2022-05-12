@@ -1,0 +1,13 @@
+name: fl_ass
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  build: ^2.0.0
+  build_config: ^1.0.0
+  dart_style: ^2.0.0
+  glob: ^2.0.0
+  path: ^1.0.0
+  recase: ^4.0.0

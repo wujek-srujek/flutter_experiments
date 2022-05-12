@@ -1,0 +1,15 @@
+builders:
+  fl_ass:
+    import: package:fl_ass/builder.dart
+    builder_factories:
+      - flAss
+    build_extensions:
+      $package$:
+        - lib/fl_ass.g.dart
+    auto_apply: dependents
+    build_to: source
+    defaults:
+      options:
+        asset_dirs:
+          - assets
+        exclusion_filters: []

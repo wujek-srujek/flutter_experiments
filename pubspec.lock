@@ -155,6 +155,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  fl_ass:
+    dependency: "direct dev"
+    description:
+      path: "packages/fl_ass"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -293,6 +300,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   shelf:
     dependency: transitive
     description:
