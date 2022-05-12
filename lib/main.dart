@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'fl_ass.g.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -32,9 +34,10 @@ class _MyPageState extends State<MyPage> {
     super.initState();
 
     _items = [
-      'assets/images/red.png',
-      'assets/images/green.png',
-      'assets/images/blue.png',
+      assets.images.red_png,
+      assets.images.green_png,
+      assets.images.blue_png,
+      assets.images.yellow_png,
     ].map((imageAsset) {
       return DropdownMenuItem(
         value: imageAsset,
