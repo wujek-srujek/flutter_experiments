@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:build/build.dart';
 
 class ImagesBuilder implements Builder {
@@ -8,7 +10,12 @@ class ImagesBuilder implements Builder {
 
   @override
   Future<void> build(BuildStep buildStep) async {
-    log.info('>>> ${buildStep.inputId}');
+    final b64 = await buildStep.readAsString(buildStep.inputId);
+    final bytes = base64.decode(b64);
+
+    final outputId = buildStep.inputId.changeExtension(_pngExtension);
+
+    return buildStep.writeAsBytes(outputId, bytes);
   }
 }
 
