@@ -1,0 +1,12 @@
+targets:
+  flutter_experiments:images:
+    sources:
+      - images/**
+    auto_apply_builders: false
+    builders:
+      image_generator:images: {}
+
+  $default:
+    builders:
+      image_generator:images:
+        enabled: false
