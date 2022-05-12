@@ -15,4 +15,5 @@ class AssetsImages {
   String get green_png => 'assets/images/green.png';
   String get red_png => 'assets/images/red.png';
   String get blue_png => 'assets/images/blue.png';
+  String get yellow_png => 'assets/images/yellow.png';
 }

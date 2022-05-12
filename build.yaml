@@ -6,7 +6,24 @@ targets:
     builders:
       image_generator:images: {}
 
+  flutter_experiments:fl_ass:
+    # sources:
+    #   - $package$ # Important as this is the input we are using.
+    #   - more_assets/**
+    auto_apply_builders: false
+    builders:
+      fl_ass: {}
+      # fl_ass:
+      #   options:
+      #     asset_dirs:
+      #       - assets
+      #       - more_assets
+    dependencies:
+      - flutter_experiments:images
+
   $default:
     builders:
       image_generator:images:
+        enabled: false
+      fl_ass:
         enabled: false
