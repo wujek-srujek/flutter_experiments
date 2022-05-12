@@ -5,19 +5,27 @@ import 'package:build/build.dart';
 class ImagesBuilder implements Builder {
   @override
   final buildExtensions = const {
-    _b64Extension: [_pngExtension],
+    _b64InputExtension: [_assetsPngOutputExtension],
   };
 
   @override
   Future<void> build(BuildStep buildStep) async {
-    final b64 = await buildStep.readAsString(buildStep.inputId);
-    final bytes = base64.decode(b64);
+    final inputId = buildStep.inputId;
 
-    final outputId = buildStep.inputId.changeExtension(_pngExtension);
+    final b64 = await buildStep.readAsString(inputId);
+    final pngBytes = base64.decode(b64);
 
-    return buildStep.writeAsBytes(outputId, bytes);
+    final outputId = AssetId(
+      inputId.package,
+      '$_assetsFolder/${inputId.changeExtension('.png').path}',
+    );
+
+    return buildStep.writeAsBytes(outputId, pngBytes);
   }
 }
 
-const _b64Extension = '.b64';
 const _pngExtension = '.png';
+const _assetsFolder = 'assets';
+
+const _b64InputExtension = '{{}}.b64';
+const _assetsPngOutputExtension = '$_assetsFolder/{{}}$_pngExtension';
