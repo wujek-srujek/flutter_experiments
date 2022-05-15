@@ -1,0 +1,10 @@
+builders:
+  validator_generator:validator:
+    import: package:validator_generator/builder.dart
+    builder_factories:
+      - validatorBuilder
+    build_extensions:
+      .dart:
+        - .validator.dart
+    auto_apply: dependents
+    build_to: source
