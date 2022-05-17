@@ -128,14 +128,13 @@ class _RuleCollectingVisitor extends SimpleElementVisitor<void> {
           final annotationElement = annotation.element!;
           if (annotationElement is ConstructorElement) {
             // Handles '@Annotation(a: 1, b: 2)' (created with a constructor).
-            return _validationRuleChecker.isAssignableFrom(
-              annotationElement.enclosingElement,
-            );
+            return _check(element, annotationElement.enclosingElement);
           } else if (annotationElement is PropertyAccessorElement) {
             // Handles '@annotation' (saved in a const).
-            return _validationRuleChecker.isAssignableFrom(
-              annotationElement.variable.type.element!,
-            );
+            final variableElement = annotationElement.variable.type.element;
+            if (variableElement is ClassElement) {
+              return _check(element, variableElement);
+            }
           }
 
           return false;
@@ -147,6 +146,34 @@ class _RuleCollectingVisitor extends SimpleElementVisitor<void> {
     if (rules.isNotEmpty) {
       fields[element.name] = rules;
     }
+  }
+
+  bool _check(FieldElement fieldElement, ClassElement annotationClassElement) {
+    final validationRuleTypes = annotationClassElement.allSupertypes
+        .where((type) => _validationRuleChecker.isAssignableFromType(type))
+        .toList(growable: false);
+    if (validationRuleTypes.isEmpty) {
+      // Not a ValidationRule.
+      return false;
+    }
+    if (validationRuleTypes.length > 1) {
+      throw StateError('More than 1 ValidationRule supertype, impossible.');
+    }
+
+    // Check if T in ValidationRule<T> is compatible with field type.
+    final validationRuleType = validationRuleTypes.single;
+    final validationRuleTypeParameter = validationRuleType.typeArguments.first;
+    if (!TypeChecker.fromStatic(validationRuleTypeParameter)
+        .isAssignableFromType(fieldElement.type)) {
+      throw StateError(
+        "Field '${fieldElement.enclosingElement.name}.${fieldElement.name}' "
+        "with type '${fieldElement.type}' is incompatible with "
+        "rule '${annotationClassElement.name}' which handles "
+        "'$validationRuleTypeParameter'",
+      );
+    }
+
+    return true;
   }
 }
 
