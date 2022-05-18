@@ -3,6 +3,109 @@
 part of 'user.dart';
 
 // **************************************************************************
+// CopyWithGenerator
+// **************************************************************************
+
+abstract class _$UserCWProxy {
+  User age(int age);
+
+  User comment(String? comment);
+
+  User firstName(String firstName);
+
+  User lastName(String lastName);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `User(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// User(...).copyWith(id: 12, name: "My name")
+  /// ````
+  User call({
+    int? age,
+    String? comment,
+    String? firstName,
+    String? lastName,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfUser.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfUser.copyWith.fieldName(...)`
+class _$UserCWProxyImpl implements _$UserCWProxy {
+  final User _value;
+
+  const _$UserCWProxyImpl(this._value);
+
+  @override
+  User age(int age) => this(age: age);
+
+  @override
+  User comment(String? comment) => this(comment: comment);
+
+  @override
+  User firstName(String firstName) => this(firstName: firstName);
+
+  @override
+  User lastName(String lastName) => this(lastName: lastName);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `User(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// User(...).copyWith(id: 12, name: "My name")
+  /// ````
+  User call({
+    Object? age = const $CopyWithPlaceholder(),
+    Object? comment = const $CopyWithPlaceholder(),
+    Object? firstName = const $CopyWithPlaceholder(),
+    Object? lastName = const $CopyWithPlaceholder(),
+  }) {
+    return User(
+      age: age == const $CopyWithPlaceholder() || age == null
+          ? _value.age
+          // ignore: cast_nullable_to_non_nullable
+          : age as int,
+      comment: comment == const $CopyWithPlaceholder()
+          ? _value.comment
+          // ignore: cast_nullable_to_non_nullable
+          : comment as String?,
+      firstName: firstName == const $CopyWithPlaceholder() || firstName == null
+          ? _value.firstName
+          // ignore: cast_nullable_to_non_nullable
+          : firstName as String,
+      lastName: lastName == const $CopyWithPlaceholder() || lastName == null
+          ? _value.lastName
+          // ignore: cast_nullable_to_non_nullable
+          : lastName as String,
+    );
+  }
+}
+
+extension $UserCopyWith on User {
+  /// Returns a callable class that can be used as follows: `instanceOfUser.copyWith(...)` or like so:`instanceOfUser.copyWith.fieldName(...)`.
+  _$UserCWProxy get copyWith => _$UserCWProxyImpl(this);
+}
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+User _$UserFromJson(Map<String, dynamic> json) => User(
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      age: json['age'] as int,
+      comment: json['comment'] as String?,
+    );
+
+Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'age': instance.age,
+      'comment': instance.comment,
+    };
+
+// **************************************************************************
 // ValidatorGenerator
 // **************************************************************************
 
