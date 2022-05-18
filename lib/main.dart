@@ -51,6 +51,7 @@ class _MyFormState extends State<MyForm> {
                     _user = _user.copyWith.firstName(value);
                   });
                 },
+                onValidate: () => _user.validateFirstName(),
               ),
               MyFormField(
                 label: 'Last name',
@@ -60,6 +61,7 @@ class _MyFormState extends State<MyForm> {
                     _user = _user.copyWith.lastName(value);
                   });
                 },
+                onValidate: () => _user.validateLastName(),
               ),
               Builder(
                 builder: (context) {
@@ -88,11 +90,13 @@ class MyFormField extends StatelessWidget {
   final String label;
   final String initialValue;
   final void Function(String) onChanged;
+  final List<String> Function() onValidate;
 
   const MyFormField({
     required this.label,
     required this.initialValue,
     required this.onChanged,
+    required this.onValidate,
   });
 
   @override
@@ -103,6 +107,14 @@ class MyFormField extends StatelessWidget {
         labelText: label,
       ),
       onChanged: onChanged,
+      validator: (_) {
+        final errors = onValidate();
+        if (errors.isEmpty) {
+          return null;
+        }
+
+        return errors.join('\n');
+      },
     );
   }
 }
