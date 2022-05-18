@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:build/build.dart';
@@ -7,29 +5,6 @@ import 'package:source_gen/source_gen.dart';
 import 'package:validator/validator.dart';
 
 class ValidatorGenerator extends GeneratorForAnnotation<Validated> {
-  @override
-  FutureOr<String> generate(LibraryReader library, BuildStep buildStep) async {
-    final body = await super.generate(library, buildStep);
-    if (body == '') {
-      return body;
-    }
-
-    final code = StringBuffer()
-      ..write(
-        """
-// ignore_for_file: type=lint
-
-import 'package:validator/validator.dart';
-
-import '${library.element.source.shortName}';
-
-""",
-      )
-      ..writeln(body);
-
-    return code.toString();
-  }
-
   @override
   String? generateForAnnotatedElement(
     Element element,

@@ -1,6 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:validator/validator.dart';
 
+part 'user.g.dart';
+
 @immutable
 @validated
 class User {

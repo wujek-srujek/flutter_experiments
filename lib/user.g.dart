@@ -1,14 +1,10 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+part of 'user.dart';
+
 // **************************************************************************
 // ValidatorGenerator
 // **************************************************************************
-
-// ignore_for_file: type=lint
-
-import 'package:validator/validator.dart';
-
-import 'user.dart';
 
 extension $UserValidatorX on User {
   /// Validates this [User] and returns errors grouped by field name.
