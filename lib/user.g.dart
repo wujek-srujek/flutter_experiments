@@ -15,6 +15,8 @@ abstract class _$UserCWProxy {
 
   User lastName(String lastName);
 
+  User pass(String pass);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `User(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -26,6 +28,7 @@ abstract class _$UserCWProxy {
     String? comment,
     String? firstName,
     String? lastName,
+    String? pass,
   });
 }
 
@@ -48,6 +51,9 @@ class _$UserCWProxyImpl implements _$UserCWProxy {
   User lastName(String lastName) => this(lastName: lastName);
 
   @override
+  User pass(String pass) => this(pass: pass);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `User(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -60,6 +66,7 @@ class _$UserCWProxyImpl implements _$UserCWProxy {
     Object? comment = const $CopyWithPlaceholder(),
     Object? firstName = const $CopyWithPlaceholder(),
     Object? lastName = const $CopyWithPlaceholder(),
+    Object? pass = const $CopyWithPlaceholder(),
   }) {
     return User(
       age: age == const $CopyWithPlaceholder() || age == null
@@ -78,6 +85,10 @@ class _$UserCWProxyImpl implements _$UserCWProxy {
           ? _value.lastName
           // ignore: cast_nullable_to_non_nullable
           : lastName as String,
+      pass: pass == const $CopyWithPlaceholder() || pass == null
+          ? _value.pass
+          // ignore: cast_nullable_to_non_nullable
+          : pass as String,
     );
   }
 }
@@ -94,6 +105,7 @@ extension $UserCopyWith on User {
 User _$UserFromJson(Map<String, dynamic> json) => User(
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
+      pass: json['pass'] as String,
       age: json['age'] as int,
       comment: json['comment'] as String?,
     );
@@ -101,6 +113,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'firstName': instance.firstName,
       'lastName': instance.lastName,
+      'pass': instance.pass,
       'age': instance.age,
       'comment': instance.comment,
     };
@@ -119,6 +132,7 @@ extension $UserValidatorX on User {
     return {
       'firstName': validateFirstName(),
       'lastName': validateLastName(),
+      'pass': validatePass(),
       'age': validateAge(),
     }..removeWhere((fieldName, errors) => errors.isEmpty);
   }
@@ -143,6 +157,18 @@ extension $UserValidatorX on User {
       lastName,
       const [
         RegexPattern(pattern: r'^(?:\p{Letter}+ )?\p{Letter}+$'),
+      ],
+    );
+  }
+
+  /// Validates this [User.pass].
+  ///
+  /// If there are no errors the returned list will be empty, never `null`.
+  List<String> validatePass() {
+    return validators.validateValue(
+      pass,
+      const [
+        password,
       ],
     );
   }

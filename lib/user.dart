@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:validator/validator.dart';
 
+import 'password_validator.dart';
+
 part 'user.g.dart';
 
 @immutable
@@ -16,6 +18,9 @@ class User {
   @RegexPattern(pattern: r'^(?:\p{Letter}+ )?\p{Letter}+$')
   final String lastName;
 
+  @password
+  final String pass;
+
   @nonNegative
   @IntRange(max: 150)
   final int age;
@@ -25,6 +30,7 @@ class User {
   const User({
     required this.firstName,
     required this.lastName,
+    required this.pass,
     required this.age,
     this.comment,
   });

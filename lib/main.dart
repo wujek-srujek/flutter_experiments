@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:validator/validator.dart';
 
+import 'password_validator.dart';
 import 'user.dart';
 
 void main() {
+  validators.register(const PasswordValidator());
+
   runApp(const MyApp());
 }
 
@@ -29,6 +33,7 @@ class _MyFormState extends State<MyForm> {
   var _user = const User(
     firstName: '',
     lastName: '',
+    pass: '',
     age: 18,
     comment: '',
   );
@@ -62,6 +67,16 @@ class _MyFormState extends State<MyForm> {
                   });
                 },
                 onValidate: () => _user.validateLastName(),
+              ),
+              MyFormField(
+                label: 'Password',
+                initialValue: _user.pass,
+                onChanged: (value) {
+                  setState(() {
+                    _user = _user.copyWith.pass(value);
+                  });
+                },
+                onValidate: () => _user.validatePass(),
               ),
               Builder(
                 builder: (context) {
