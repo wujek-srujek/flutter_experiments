@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,17 +29,66 @@ class ChatPage extends StatelessWidget {
   }
 }
 
-class _ConversationWidget extends StatelessWidget {
+class _ConversationWidget extends StatefulWidget {
   const _ConversationWidget();
 
   @override
+  State<_ConversationWidget> createState() => _ConversationWidgetState();
+}
+
+class _ConversationWidgetState extends State<_ConversationWidget> {
+  final _scrollController = ScrollController();
+  late final StreamSubscription<Map<String, dynamic>> _subscription;
+  List<Map<String, dynamic>> _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _messages = [];
+
+    FirebaseFirestore.instance
+        .collection(_messagesCollection)
+        .orderBy(_sentAtProperty)
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs)
+        .map(
+          (docSnapshots) => docSnapshots
+              .map((docSnapshot) => docSnapshot.data())
+              .toList(growable: false),
+        )
+        .listen((messages) {
+      setState(() {
+        _messages = messages;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    _scrollController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
+    });
+
     return ListView.builder(
-      itemCount: 0,
+      controller: _scrollController,
+      itemCount: _messages.length,
       itemBuilder: (context, index) {
+        final message = _messages[index];
+
         return _MessageWidget(
-          name: 'name',
-          message: 'message ${index + 1}',
+          name: message[_sentByProperty]! as String,
+          message: message[_messageProperty]! as String,
         );
       },
     );
