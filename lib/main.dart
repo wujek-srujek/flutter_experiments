@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -115,14 +116,39 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
   const MyPage();
 
   @override
+  State<MyPage> createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
+  String? _data;
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Firebase'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                final callable =
+                    FirebaseFunctions.instanceFor(region: 'europe-west3')
+                        .httpsCallable('hello');
+                final futureResult = callable<String>();
+                final result = await futureResult;
+                setState(() {
+                  _data = result.data;
+                });
+              },
+              child: const Text('Call function'),
+            ),
+            Text(_data ?? '<No data>'),
+          ],
+        ),
       ),
     );
   }
