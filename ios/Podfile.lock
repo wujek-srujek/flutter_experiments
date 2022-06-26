@@ -4,6 +4,11 @@ PODS:
     - FirebaseAuth (~> 8.15.0)
   - Firebase/CoreOnly (8.15.0):
     - FirebaseCore (= 8.15.0)
+  - firebase_app_check (0.0.6-14):
+    - Firebase/CoreOnly (~> 8.15.0)
+    - firebase_core
+    - FirebaseAppCheck (~> 8.15.0-beta)
+    - Flutter
   - firebase_auth (3.3.20):
     - Firebase/Auth (= 8.15.0)
     - firebase_core
@@ -11,6 +16,10 @@ PODS:
   - firebase_core (1.18.0):
     - Firebase/CoreOnly (= 8.15.0)
     - Flutter
+  - FirebaseAppCheck (8.15.0-beta):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - PromisesObjC (< 3.0, >= 1.2)
   - FirebaseAuth (8.15.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
@@ -54,6 +63,7 @@ PODS:
   - PromisesObjC (2.1.0)
 
 DEPENDENCIES:
+  - firebase_app_check (from `.symlinks/plugins/firebase_app_check/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
@@ -61,6 +71,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Firebase
+    - FirebaseAppCheck
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -71,6 +82,8 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
+  firebase_app_check:
+    :path: ".symlinks/plugins/firebase_app_check/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -80,8 +93,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
+  firebase_app_check: 5dfc9347b29d6adc428dede373b0004de9149828
   firebase_auth: 0c31e02a522f6ece632f9f6d623441898c4dd679
   firebase_core: b14c1cfa29b9eb316345f74d1489328283825d6d
+  FirebaseAppCheck: 59853f959315579e696877692e7558a68bd9ee86
   FirebaseAuth: 3e73bf8abf4fbb40f8b421f361f4cc48ee57388c
   FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
   FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
