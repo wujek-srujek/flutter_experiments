@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
@@ -16,7 +20,50 @@ Future<void> main() async {
 
   await FirebaseAuth.instance.signInAnonymously();
 
+  final messaging = FirebaseMessaging.instance;
+  messaging.onTokenRefresh.listen((fcmToken) {
+    log('>>> Token refreshed');
+    _saveFcmToken(fcmToken);
+  });
+  final fcmToken = (await messaging.getToken())!;
+  _saveFcmToken(fcmToken);
+
+  FirebaseMessaging.onMessage.listen((message) {
+    log('>>> Foreground message received');
+    _messageHandler(message);
+  });
+  FirebaseMessaging.onBackgroundMessage(_backgroundMessageHandler);
+
   runApp(const MyApp());
+}
+
+Future<void> _backgroundMessageHandler(RemoteMessage message) async {
+  log('>>> Background message received');
+  _messageHandler(message);
+}
+
+void _messageHandler(RemoteMessage message) {
+  log('>>> Message map: ${message.toMap()}');
+}
+
+void _saveFcmToken(String fcmToken) {
+  log('>>> Saving FCM token: $fcmToken');
+  final user = FirebaseAuth.instance.currentUser!;
+  final db = FirebaseFirestore.instance;
+  // Create or update the user and their FCM token.
+  db
+      .collection('users')
+      .doc(user.uid)
+      .collection('fcmTokens')
+      .doc(fcmToken)
+      .set(
+    {
+      'lastSavedAt': DateTime.now().toUtc().toIso8601String(),
+    },
+    SetOptions(
+      merge: true,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
