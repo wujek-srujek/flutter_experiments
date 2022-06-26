@@ -42,3 +42,8 @@ app.*.map.json
 
 # Do not store pubspec.lock for subpackages
 /packages/**/pubspec.lock
+
+# Ignore Firebase config files.
+/android/app/google-services.json
+/ios/firebase_app_id_file.json
+/lib/firebase_options.dart
