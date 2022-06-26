@@ -17,6 +17,7 @@ dependencies:
   firebase_messaging: ^11.0.0
   flutter:
     sdk: flutter
+  uuid: ^3.0.0
 
 dev_dependencies:
   googleapis_auth: ^1.0.0

@@ -1,6 +1,7 @@
-import 'dart:developer';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage();
@@ -78,6 +79,7 @@ class _SendWidget extends StatefulWidget {
 }
 
 class _SendWidgetState extends State<_SendWidget> {
+  final uuid = const Uuid();
   late final TextEditingController _messageController;
 
   @override
@@ -114,7 +116,19 @@ class _SendWidgetState extends State<_SendWidget> {
               return;
             }
 
-            log('Message: $message');
+            FirebaseFirestore.instance
+                .collection(_messagesCollection)
+                .doc(uuid.v1())
+                .set(
+              {
+                _sentAtProperty: DateTime.now().toUtc().toIso8601String(),
+                _sentByProperty: FirebaseAuth.instance.currentUser!.uid,
+                _messageProperty: message,
+              },
+              SetOptions(
+                merge: true,
+              ),
+            );
           },
           icon: const Icon(Icons.send_rounded),
         ),
@@ -122,3 +136,8 @@ class _SendWidgetState extends State<_SendWidget> {
     );
   }
 }
+
+const _messagesCollection = '/messages';
+const _sentAtProperty = 'sentAt';
+const _sentByProperty = 'sentBy';
+const _messageProperty = 'message';
