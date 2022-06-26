@@ -44,6 +44,17 @@ Future<void> _backgroundMessageHandler(RemoteMessage message) async {
 
 void _messageHandler(RemoteMessage message) {
   log('>>> Message map: ${message.toMap()}');
+
+  final messageData = message.data['message'] as String?;
+  if (messageData != null) {
+    // If there is no context yet (the message arrived before the UI was built)
+    // we don't show anything, which is OK for this experiment.
+    _scaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(
+        content: Text(messageData),
+      ),
+    );
+  }
 }
 
 void _saveFcmToken(String fcmToken) {
@@ -73,6 +84,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Experiments',
+      scaffoldMessengerKey: _scaffoldMessengerKey,
       home: MyPage(),
     );
   }
@@ -90,3 +102,5 @@ class MyPage extends StatelessWidget {
     );
   }
 }
+
+const _scaffoldMessengerKey = GlobalObjectKey<ScaffoldMessengerState>(true);

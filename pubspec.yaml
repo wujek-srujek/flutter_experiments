@@ -17,5 +17,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+dev_dependencies:
+  googleapis_auth: ^1.0.0
+  http: ^0.13.0
+
 flutter:
   uses-material-design: true
